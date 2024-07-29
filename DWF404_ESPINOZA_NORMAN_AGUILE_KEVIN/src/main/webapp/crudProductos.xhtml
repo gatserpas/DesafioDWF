@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:h="http://xmlns.jcp.org/jsf/html"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>CRUD de Productos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="container">
+        <h1 class="my-4">Gestión de Productos</h1>
+
+        <h:form enctype="multipart/form-data">
+            <h2>Lista de Productos</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ui:repeat value="#{productoBean.productos}" var="producto">
+                    <tr>
+                        <td><h:outputText value="#{producto.id}"/></td>
+                        <td><h:outputText value="#{producto.nombre}"/></td>
+                        <td><h:outputText value="#{producto.descripcion}"/></td>
+                        <td><h:outputText value="#{producto.precio}"/></td>
+                        <td>
+                            <h:graphicImage value="#{productoBean.getImageURL(producto.id)}" width="100" height="100" rendered="#{not empty producto.imagen}"/>
+                        </td>
+                        <td>
+                            <h:commandButton value="Editar" action="#{productoBean.editarProducto(producto.id)}" class="btn btn-warning btn-sm"/>
+                            <h:commandButton value="Eliminar" action="#{productoBean.eliminarProducto(producto.id)}" class="btn btn-danger btn-sm">
+                                <f:ajax render="@form"/>
+                            </h:commandButton>
+                        </td>
+                    </tr>
+                </ui:repeat>
+                </tbody>
+            </table>
+
+            <h2>#{productoBean.editMode ? 'Editar Producto' : 'Agregar Producto'}</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <h:inputText id="nombre" value="#{productoBean.producto.nombre}" styleClass="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <h:inputText id="descripcion" value="#{productoBean.producto.descripcion}" styleClass="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <h:inputText id="precio" value="#{productoBean.producto.precio}" styleClass="form-control"/>
+            </div>
+
+            <h:commandButton value="#{productoBean.editMode ? 'Actualizar' : 'Agregar'}" action="#{productoBean.guardarProducto()}" class="btn btn-primary"/>
+            <h:commandButton value="Cancelar" action="#{productoBean.cancelarEdicion()}" class="btn btn-secondary"/>
+        </h:form>
+        <h:form>
+            <h:commandButton value="Ir al inicio "
+                             action="index.xhtml"
+                             styleClass="btn btn-primary"/>
+        </h:form>
+    </div>
+</h:body>
+</html>
