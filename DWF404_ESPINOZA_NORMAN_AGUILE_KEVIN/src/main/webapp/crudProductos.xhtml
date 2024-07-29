@@ -60,12 +60,16 @@
                 <label for="precio">Precio</label>
                 <h:inputText id="precio" value="#{productoBean.producto.precio}" styleClass="form-control"/>
             </div>
+            <div class="form-group">
+                <label for="precio">Imagen</label>
+                <h:inputText id="imagen" value="#{productoBean.producto.precio}" styleClass="form-control"/>
+            </div>
 
             <h:commandButton value="#{productoBean.editMode ? 'Actualizar' : 'Agregar'}" action="#{productoBean.guardarProducto()}" class="btn btn-primary"/>
             <h:commandButton value="Cancelar" action="#{productoBean.cancelarEdicion()}" class="btn btn-secondary"/>
         </h:form>
         <h:form>
-            <h:commandButton value="Ir al inicio "
+            <h:commandButton value="Ir "
                              action="index.xhtml"
                              styleClass="btn btn-primary"/>
         </h:form>
