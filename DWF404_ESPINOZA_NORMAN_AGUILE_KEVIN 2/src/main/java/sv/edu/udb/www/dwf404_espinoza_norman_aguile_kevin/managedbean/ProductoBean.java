@@ -1,7 +1,6 @@
 package sv.edu.udb.www.dwf404_espinoza_norman_aguile_kevin.managedbean;
 
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.codec.binary.Base64;
 import jakarta.faces.bean.ManagedBean;
 import jakarta.faces.bean.SessionScoped;
 import jakarta.servlet.http.Part;
@@ -37,6 +36,10 @@ public class ProductoBean implements Serializable {
         cargarProductos();
     }
 
+    public String getImageURL(Long productId) {
+        // Ruta donde se almacenan las imágenes
+        return "/images/productos/" + productId + ".jpg";
+    }
 
     public List<Producto> getProductos() {
         return productos;
@@ -196,20 +199,5 @@ public class ProductoBean implements Serializable {
                 outputStream.write(buffer, 0, bytesRead);
             }
         }
-    }
-    public String getImageBase64(byte[] imageBytes) {
-        if (imageBytes == null) {
-            return null;
-        }
-        return Base64.encodeBase64String(imageBytes);
-    }
-
-    public String getImageURL(Long productId) {
-        for (Producto p : productos) {
-            if (p.getId().equals(productId)) {
-                return "data:image/jpeg;base64," + getImageBase64(p.getImagen());
-            }
-        }
-        return null;
     }
 }
